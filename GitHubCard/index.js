@@ -3,7 +3,15 @@
     (replacing the placeholder with your Github name):
     https://api.github.com/users/<your name>
 */
-
+axios.get('https://api.github.com/users/Epeng1994')
+  .then((res)=>{
+    const x = userCard(res.data)
+    const cards = document.querySelector('.cards')
+    cards.append(x)
+  })
+  .catch((err) =>{
+    console.log(err)
+  })
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
     github info! You will need to understand the structure of this
@@ -28,7 +36,20 @@
     user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+const followersArray = ['tetondan','dustinmyers','justsml','luishrd','bigknell'];
+
+followersArray.forEach(a => {
+  axios.get(`https://api.github.com/users/${a}`)
+  .then((res)=>{
+    const x = userCard(res.data)
+    const cards = document.querySelector('.cards')
+    cards.append(x)
+  })
+  .catch((err) =>{
+    console.log(err)
+  })
+})
+
 
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
@@ -49,6 +70,54 @@ const followersArray = [];
       </div>
     </div>
 */
+
+function userCard(myObj){
+  const card = document.createElement('div')
+  card.classList.add('card')
+
+  const picture = document.createElement('img')
+  picture.src = myObj.avatar_url
+
+  const cardInfo = document.createElement('div')
+  cardInfo.classList.add('card-info')
+  card.append(picture, cardInfo)
+
+  const person = document.createElement('h3')
+  person.classList.add('name')
+  person.textContent = myObj.name
+
+  const username = document.createElement('p')
+  username.classList.add('username')
+  username.textContent = myObj.login
+
+  const ulocation = document.createElement('p')
+  ulocation.textContent = `Location: ${myObj.location}`
+
+  const profile = document.createElement('p')
+  profile.textContent = 'Profile'
+  const anc = document.createElement('a')
+  anc.href = myObj.url
+  anc.textContent = myObj.url
+  profile.appendChild(anc)
+
+  const ufollowers = document.createElement('p')
+  ufollowers.textContent = `Followers: ${myObj.followers}`
+
+  const ufollowing = document.createElement('p')
+  ufollowing.textContent = `Following : ${myObj.following}`
+  
+  const ubio = document.createElement('p')
+  ubio.textContent = `Bio: ${myObj.bio}`
+
+  cardInfo.append(person, username, ulocation, profile, ufollowers, ufollowing, ubio)
+
+  return card
+}
+
+const cards = document.querySelector('.cards')
+
+
+
 
 /*
   List of LS Instructors Github username's:
