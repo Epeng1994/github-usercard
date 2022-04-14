@@ -7,7 +7,17 @@ axios.get('https://api.github.com/users/Epeng1994')
   .then((res)=>{
     const x = userCard(res.data)
     const cards = document.querySelector('.cards')
-    cards.append(x)
+    cards.appendChild(x)
+    /*const follow = res.data.followers
+    follow.forEach(a => {
+      axios.get(`https://api.github.com/users/${a}`)
+        .then((res)=>{
+          const y = userCard(res.data)
+          const cards = document.querySelector('.cards')
+          cards.append(y)
+        })
+    })
+    */
   })
   .catch((err) =>{
     console.log(err)
@@ -43,7 +53,7 @@ followersArray.forEach(a => {
   .then((res)=>{
     const x = userCard(res.data)
     const cards = document.querySelector('.cards')
-    cards.append(x)
+    cards.appendChild(x)
   })
   .catch((err) =>{
     console.log(err)
